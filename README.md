@@ -34,7 +34,6 @@ this is a dispatch event demo.
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/20190319201708281.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MjUxNjEwOQ==,size_16,color_FFFFFF,t_70)
 同样执行五个方法，前面三个方法和上面一样，这时候会调用button的dispatchTouchEvent，因为是super的，所以事件默认是继续分发下去，如果button的dispatchTouchEvent是super/true的，默认就是自己消费掉了，不会再向上级传递了。反之button的dispatchTouchEvent是false的，自己不完全消费掉，还是可以往上级传递，调用LinearLayout的onTouchEvent方法，如下图所示：
 ![在这里插入图片描述](https://img-blog.csdnimg.cn/2019031920212369.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3dlaXhpbl80MjUxNjEwOQ==,size_16,color_FFFFFF,t_70)
-项目到这，基本就差不多。很好理解把！好了多了也不说了，想了解详情可以下载下demo,自己测试一下就什么都懂了。
-链接地址：[事件分发demo链接地址](https://github.com/ailibin/dispatchEvent)
+
 # 总结
 总之，如果一个控件中，不管是Activity还是ViewGroup，view的dispatchTouchEvent方法中返回true，就表示事件在当前控件断掉了，不会向上级传递也不会当前控件消费；一个ViewGroup/View/Activity的dispatchTouchEvent方法如果返回false，意思就是事件不再当前的控件分发下去，就会交给上一级的父类onTouchEvent方法进行处理；一个ViewGroup的onInterceptTouchEvent拦截方法，返回值false/super，都表示不拦截当前要传递的事件，事件往下级传递，最终如果子类的onTouchEvent方法中返回super/true，表示事件处理完毕，整个流程结束，如果是返回false，事件交由上一级处理，如果上一级的onTouchEvent方法中还是返回false,继续交由上级处理，依次类推...
